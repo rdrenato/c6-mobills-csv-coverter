@@ -1,7 +1,7 @@
 import csv
 
 def convert_to_mobills_csv(input_file, output_file):
-    with open(input_file, 'r', newline='') as csv_file:
+    with open(input_file, 'r', newline='', encoding='utf-8') as csv_file:
         reader = csv.reader(csv_file, delimiter=';')
         data = list(reader)
 
@@ -27,11 +27,11 @@ def convert_to_mobills_csv(input_file, output_file):
         else:
             mobills_data.append(new_row)
         
-    with open(output_file, 'w', newline='') as csv_file:
+    with open(output_file, 'w', newline='', encoding='utf-16') as csv_file:
         writer = csv.writer(csv_file, delimiter=';', quoting=csv.QUOTE_ALL)
         writer.writerows(mobills_data)
 
-    with open(rejected_file, 'w', newline='') as csv_file:
+    with open(rejected_file, 'w', newline='', encoding='utf-16') as csv_file:
         writer = csv.writer(csv_file, delimiter=';', quoting=csv.QUOTE_ALL)
         writer.writerows(rejected_data)
 
@@ -39,7 +39,9 @@ def convert_to_mobills_csv(input_file, output_file):
 
 # Categories to be used in Mobills:
 # Alimentação
+# Doação
 # Entretenimento
+# Pets
 # Saúde
 # Serviços
 # Transporte
@@ -63,6 +65,15 @@ def rework_category(category, description):
     elif "UBER" in description:
         reworked_category = "Transporte"
 
+    elif "PET LOV" in description \
+      or "PETLOV" in description \
+      or "PETZ" in description:
+        reworked_category = "Pets"
+
+    elif "APOIASE" in description \
+      or "PADRIM" in description:
+        reworked_category = "Doação"
+
     elif category == "Relacionados a Automotivo":
         reworked_category = "Transporte"
 
@@ -83,7 +94,8 @@ def rework_category(category, description):
       or category == "Departamento / Desconto" \
       or category == "Casa / Escritório Mobiliário" \
       or category == "Vestuário / Roupas" \
-      or category == "Empresa para empresa":
+      or category == "Empresa para empresa" \
+      or category == "Marketing Direto":
         reworked_category = "Varejo"
 
     return reworked_category
