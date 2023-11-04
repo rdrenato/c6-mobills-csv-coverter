@@ -71,7 +71,8 @@ def rework_category(category, description):
         reworked_category = "Pets"
 
     elif "APOIASE" in description \
-      or "PADRIM" in description:
+      or "PADRIM" in description \
+      or "CATARSE" in description:
         reworked_category = "Doação"
 
     elif category == "Relacionados a Automotivo":
